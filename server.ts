@@ -1,14 +1,21 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { usersRouter } from './routes/users';
 import { authRouter } from './routes/auth';
 import { itemsRouter } from './routes/items';
 import { connectDB } from './config/db';
 
 const app = express();
+
 //Connect to database
 connectDB();
+
+// init middleware
+app.use(express.json());
+
 //routes
-app.get('/', (req, res) => res.json({ msg: 'Welcome to the game' }));
+app.get('/', (req: Request, res: Response) =>
+  res.json({ msg: 'Welcome to the game' })
+);
 
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
