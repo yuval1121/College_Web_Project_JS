@@ -1,5 +1,7 @@
+import User from '../types/User';
+import bcrypt from 'bcryptjs';
+import UserModel from '../models/User';
 import { Router } from 'express';
-import User from '../models/User';
 import { body, validationResult } from 'express-validator';
 
 const router: Router = Router();
@@ -25,23 +27,34 @@ router.post(
       name,
       email,
       password,
-    }: { name: string; email: string; password: string } = req.body;
+      type,
+    }: { name: string; email: string; password: string; type: string } =
+      req.body;
 
     try {
-      let user = await User.findOne({ email });
+      let user = await UserModel.findOne({ email });
 
       if (user) {
         res.status(400).json({ msg: 'User already exists' });
       }
 
-      user = new User({
+      user = new UserModel<User>({
         name,
         email,
         password,
+        type,
       });
 
+      const salt = await bcrypt.genSalt(10);
+
+      user.password = await bcrypt.hash(password, salt);
+
       await user.save();
-    } catch (err) {}
+      res.send('User saved');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+    }
   }
 );
 
