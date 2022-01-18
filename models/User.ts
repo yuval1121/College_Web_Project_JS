@@ -15,7 +15,7 @@ const userSchema: Schema = new Schema<User>({
     type: String,
     required: true,
   },
-  type: {
+  role: {
     type: String,
     required: true,
     default: 'client',

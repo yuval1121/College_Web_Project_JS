@@ -29,8 +29,8 @@ router.post(
       name,
       email,
       password,
-      type,
-    }: { name: string; email: string; password: string; type: string } =
+      role,
+    }: { name: string; email: string; password: string; role: string } =
       req.body;
 
     try {
@@ -44,7 +44,7 @@ router.post(
         name,
         email,
         password,
-        type,
+        role,
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -56,7 +56,7 @@ router.post(
       const payload = {
         user: {
           id: user.id,
-          type: user.type,
+          type: user.role,
         },
       };
 
