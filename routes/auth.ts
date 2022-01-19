@@ -14,7 +14,9 @@ const authRouter: Router = Router();
 authRouter.get('/', auth, async (req, res) => {
   try {
     //@ts-ignore
-    const user = await UserModel.findById(req.user.id).select('-password');
+    const user = await UserModel.findById(res.locals.user.id).select(
+      '-password'
+    );
     res.json(user);
   } catch (err) {
     console.error(err);

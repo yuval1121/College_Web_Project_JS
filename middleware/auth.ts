@@ -14,7 +14,7 @@ export default function (req: Request, res: Response, next: NextFunction) {
   try {
     const decoded = jwt.verify(token, config.get('jwt'));
     //@ts-ignore
-    req.user = decoded.user;
+    res.locals.user = decoded.user;
     next();
   } catch (error) {
     res.status(401).json({ msg: 'Token is not valid' });
