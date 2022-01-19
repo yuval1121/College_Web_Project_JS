@@ -25,13 +25,7 @@ usersRouter.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const {
-      name,
-      email,
-      password,
-      role,
-    }: { name: string; email: string; password: string; role: string } =
-      req.body;
+    const { name, email, password, role, table }: User = req.body;
 
     try {
       let user = await UserModel.findOne({ email });
@@ -45,6 +39,7 @@ usersRouter.post(
         email,
         password,
         role,
+        table,
       });
 
       const salt = await bcrypt.genSalt(10);

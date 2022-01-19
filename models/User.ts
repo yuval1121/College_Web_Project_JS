@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
 import User from '../types/User';
 
 const userSchema: Schema = new Schema<User>({
@@ -19,6 +19,10 @@ const userSchema: Schema = new Schema<User>({
     type: String,
     required: true,
     default: 'client',
+  },
+  table: {
+    type: Types.ObjectId,
+    ref: 'table',
   },
 });
 
