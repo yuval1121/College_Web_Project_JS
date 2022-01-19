@@ -1,12 +1,33 @@
 import { Router } from 'express';
 import { authAdmin, authUser } from '../middleware/auth';
+import itemModel from '../models/Item';
 const itemsRouter: Router = Router();
 
 // @route   GET api/items
 // @desc    Get all items on menu.
 // @access  Public
-itemsRouter.get('/', (req, res) => {
-  res.send('Get all items');
+itemsRouter.get('/', async (req, res) => {
+  try {
+    const items = await itemModel.find();
+    res.json(items);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   GET api/items/:name
+// @desc    Get all items on menu.
+// @access  Public
+itemsRouter.get('/:name', async (req, res) => {
+  try {
+    const { name } = req.params;
+    const items = await itemModel.find({ name });
+    res.json(items);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
 });
 
 // @route   POST api/items

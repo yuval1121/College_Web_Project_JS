@@ -5,6 +5,7 @@ const itemSchema: Schema = new Schema<Item>({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   price: {
     type: Number,
