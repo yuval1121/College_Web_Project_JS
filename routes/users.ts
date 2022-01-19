@@ -6,12 +6,12 @@ import config from 'config';
 import { Router } from 'express';
 import { body, validationResult } from 'express-validator';
 
-const router: Router = Router();
+const usersRouter: Router = Router();
 
 // @route   POST api/users
 // @desc    Register a user
 // @access  Public
-router.post(
+usersRouter.post(
   '/',
   body('name', 'Please add name').notEmpty(),
   body('email', 'Please include a valid email').isEmail(),
@@ -56,7 +56,7 @@ router.post(
       const payload = {
         user: {
           id: user.id,
-          type: user.role,
+          role: user.role,
         },
       };
 
@@ -71,4 +71,4 @@ router.post(
   }
 );
 
-export { router as usersRouter };
+export { usersRouter };

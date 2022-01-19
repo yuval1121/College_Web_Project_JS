@@ -6,7 +6,7 @@ import { connectDB } from './config/db';
 
 const app = express();
 
-//Connect to database
+//connect to database
 connectDB();
 
 // init middleware
