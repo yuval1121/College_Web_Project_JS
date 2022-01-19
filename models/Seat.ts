@@ -2,7 +2,7 @@ import { Schema, Types, model } from 'mongoose';
 import Seat from '../types/Seat';
 
 const seatSchema: Schema = new Schema<Seat>({
-  clients: [Types.ObjectId],
+  clients: [{ type: Types.ObjectId, ref: 'user' }],
   size: Number,
   number: Number,
 });

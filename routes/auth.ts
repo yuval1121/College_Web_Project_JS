@@ -4,16 +4,15 @@ import UserModel from '../models/User';
 import bcrypt from 'bcryptjs';
 import config from 'config';
 import jwt from 'jsonwebtoken';
-import auth from '../middleware/auth';
+import { authUser } from '../middleware/auth';
 
 const authRouter: Router = Router();
 
 // @route   GET api/auth
 // @desc    Get logged in user
 // @access  Private
-authRouter.get('/', auth, async (req, res) => {
+authRouter.get('/', authUser, async (req, res) => {
   try {
-    //@ts-ignore
     const user = await UserModel.findById(res.locals.user.id).select(
       '-password'
     );
