@@ -56,15 +56,30 @@ itemsRouter.post('/', authUser, authAdmin, async (req, res) => {
 // @route   PUT api/items/:id
 // @desc    Update item.
 // @access  Admin
-itemsRouter.put('/:id', authUser, authAdmin, (req, res) => {
-  res.send('Update item');
+itemsRouter.put('/:id', authUser, authAdmin, async (req, res) => {
+  try {
+    const itemID = req.params.id;
+    const  newParams  = req.body;
+    const item = await itemModel.findByIdAndUpdate(itemID, newParams);
+    res.json(item);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
 });
 
-// @route   PUT api/items/:id
+// @route   DELETE api/items/:id
 // @desc    Delete item.
 // @access  Admin
-itemsRouter.delete('/:id', authUser, authAdmin, (req, res) => {
-  res.send('Delete item');
+itemsRouter.delete('/:id', authUser, authAdmin, async (req, res) => {
+  try {
+    const itemID = req.params.id;
+    await itemModel.findByIdAndDelete(itemID);
+    res.status(200).send('Item successfully deleted');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
 });
 
 export { itemsRouter };
