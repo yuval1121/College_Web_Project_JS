@@ -6,8 +6,12 @@ import itemModel from './Item';
 const orderSchema = new Schema<Order>({
   items: {
     type: [Types.ObjectId],
-    required: true,
     ref: 'item',
+    validate: {
+      validator: function (arr: [Types.ObjectId]) {
+        return arr.length > 0;
+      },
+    },
   },
   client: {
     type: Types.ObjectId,
@@ -32,6 +36,7 @@ orderSchema.pre<Order>('save', async function (next) {
     price += itemFound?.price ?? 0;
   }
   this.price = price;
+  next();
 });
 
 const orderModel = model<Order>('order', orderSchema);
