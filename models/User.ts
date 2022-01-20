@@ -17,7 +17,6 @@ const userSchema: Schema = new Schema<User>({
   },
   role: {
     type: String,
-    required: true,
     default: 'client',
   },
   table: {
