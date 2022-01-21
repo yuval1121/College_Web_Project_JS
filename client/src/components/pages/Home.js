@@ -1,10 +1,17 @@
 import React from 'react';
+import Items from '../items/Items';
 import PropTypes from 'prop-types';
+import ItemForm from '../items/ItemForm';
 
 const Home = props => {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className='grid-2'>
+      <div>
+        <ItemForm />
+      </div>
+      <div>
+        <Items />
+      </div>
     </div>
   );
 };

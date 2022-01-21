@@ -1,7 +1,7 @@
 import { useReducer } from 'react';
-import uuid from 'uuid';
 import itemContext from './itemContext';
 import itemReducer from './itemReducer';
+import { v5 as uuidv5 } from 'uuid';
 import {
   ADD_ITEM,
   DELETE_ITEM,
@@ -15,11 +15,23 @@ import {
 const ItemState = props => {
   const initState = {
     items: [
-      { id: 1, name: 'Coke Can', price: 13, alcoholic: false, time: null },
-      { id: 2, name: 'Pepsi Can', price: 13, alcoholic: false, time: null },
+      {
+        id: 1,
+        name: 'Coke Can',
+        price: 13,
+        alcoholic: false,
+        time: '12PM',
+      },
+      { id: 2, name: 'Beer', price: 13, alcoholic: true, time: null },
     ],
+    cart: [],
   };
   const [state, dispatch] = useReducer(itemReducer, initState);
+
+  const addItem = item => {
+    item.id = uuidv5();
+    dispatch({ type: ADD_ITEM, payload: item });
+  };
 
   return (
     <itemContext.Provider
