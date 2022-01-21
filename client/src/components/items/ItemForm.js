@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import itemContext from '../../context/Item/itemContext';
+import ItemContext from '../../context/Item/itemContext';
 import PropTypes from 'prop-types';
 
 const ItemForm = props => {
-  const itemContext = useContext(itemContext);
+  const itemContext = useContext(ItemContext);
 
   const [item, setItem] = useState({
     name: '',
@@ -15,6 +15,12 @@ const ItemForm = props => {
 
   const onChange = e => {
     setItem(prevItem => {
+      if (e.target.value === 'no') {
+        return { ...prevItem, [e.target.name]: false };
+      }
+      if (e.target.value === 'yes') {
+        return { ...prevItem, [e.target.name]: false };
+      }
       return { ...prevItem, [e.target.name]: e.target.value };
     });
   };
@@ -60,15 +66,22 @@ const ItemForm = props => {
         name='alcoholic'
         value='no'
         checked={!alcoholic}
+        onChange={onChange}
       />{' '}
       Non-Alcoholic
       <br />
-      <input type='radio' name='alcoholic' value='yes' checked={alcoholic} />
+      <input
+        type='radio'
+        name='alcoholic'
+        value={false}
+        checked={alcoholic}
+        onChange={onChange}
+      />
       Alcoholic
       <div>
         <input
           type='submit'
-          value='Add Contact'
+          value='Add Item'
           className='btn btn-primary btn-block'
         />
       </div>

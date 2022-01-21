@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import ItemContext from '../../context/Item/itemContext';
 
 const Item = ({ item }) => {
+  const itemContext = useContext(ItemContext);
+  const { deleteItem } = itemContext;
   const { id, name, price, alcoholic, time } = item;
+
+  const onDelete = () => {
+    deleteItem(id);
+  };
+
   return (
     <div className='card bg-light'>
       <h3 className='text-primary text-left'>
@@ -31,7 +39,9 @@ const Item = ({ item }) => {
       </ul>
       <p className='btn btn-dark btn-sm'>Add</p>
       <p className='btn btn-dark btn-sm'>Edit</p>
-      <p className='btn btn-danger btn-sm'>Delete</p>
+      <p className='btn btn-danger btn-sm' onClick={onDelete}>
+        Delete
+      </p>
     </div>
   );
 };
