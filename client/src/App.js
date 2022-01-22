@@ -9,6 +9,11 @@ import ItemState from './context/Item/ItemState';
 import AuthState from './context/auth/AuthState';
 import AlertState from './context/alert/AlertState';
 import Alerts from './components/layout/Alerts';
+import setAuthToken from './utils/setAuthToken';
+
+if (localStorage.getItem('token')) {
+  setAuthToken(localStorage.getItem('token'));
+}
 
 const App = () => {
   return (
