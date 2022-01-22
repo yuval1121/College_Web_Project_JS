@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ItemContext from '../../context/Item/itemContext';
-import PropTypes from 'prop-types';
 
-const ItemForm = props => {
+const ItemForm = () => {
   const itemContext = useContext(ItemContext);
 
   const { addItem, clearCurrent, current, updateItem } = itemContext;
@@ -108,7 +107,5 @@ const ItemForm = props => {
     </form>
   );
 };
-
-ItemForm.propTypes = {};
 
 export default ItemForm;

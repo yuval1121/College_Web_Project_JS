@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import AuthContext from '../../context/auth/AuthContext';
 import { Navigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 const PrivateRoute = props => {
   const authContext = useContext(AuthContext);
@@ -13,7 +12,5 @@ const PrivateRoute = props => {
     <Navigate to={'/login'} />
   );
 };
-
-PrivateRoute.propTypes = {};
 
 export default PrivateRoute;

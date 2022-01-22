@@ -1,11 +1,15 @@
 import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Item from './Item';
 import ItemContex from '../../context/Item/itemContext';
 
-const Items = props => {
+const Items = () => {
   const itemContext = useContext(ItemContex);
-  const { items, filtered, getItems, loading } = itemContext;
+  const {
+    items,
+    filtered,
+    getItems,
+    //loading
+  } = itemContext;
 
   useEffect(() => {
     getItems();
@@ -23,7 +27,5 @@ const Items = props => {
     </>
   );
 };
-
-Items.propTypes = {};
 
 export default Items;

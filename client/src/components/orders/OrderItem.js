@@ -3,16 +3,15 @@ import PropTypes from 'prop-types';
 import ItemContext from '../../context/Item/itemContext';
 import AuthContext from '../../context/auth/AuthContext';
 
-const Item = ({ item }) => {
+const OrderItem = ({ item }) => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const itemContext = useContext(ItemContext);
-  const { deleteItem, setCurrent, clearCurrent, addToOrder } = itemContext;
+  const { deleteItem, setCurrent, clearCurrent, deleteFromOrder } = itemContext;
   const { _id, name, price, alcoholic, time } = item;
 
   const onDelete = () => {
-    deleteItem(_id);
-    clearCurrent();
+    deleteFromOrder(_id);
   };
 
   return (
@@ -40,26 +39,14 @@ const Item = ({ item }) => {
           </li>
         )}
       </ul>
-      {user?.role === 'client' && (
-        <p className='btn btn-dark btn-sm' onClick={() => addToOrder(item)}>
-          Add
-        </p>
-      )}
-      {user?.role === 'admin' && (
-        <p className='btn btn-dark btn-sm' onClick={() => setCurrent(item)}>
-          Edit
-        </p>
-      )}
-      {user?.role === 'admin' && (
-        <p className='btn btn-danger btn-sm' onClick={onDelete}>
-          Delete
-        </p>
-      )}
+      <p className='btn btn-danger btn-sm' onClick={onDelete}>
+        Delete
+      </p>
     </div>
   );
 };
 
-Item.propTypes = {
+OrderItem.propTypes = {
   item: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
@@ -69,4 +56,4 @@ Item.propTypes = {
   }).isRequired,
 };
 
-export default Item;
+export default OrderItem;

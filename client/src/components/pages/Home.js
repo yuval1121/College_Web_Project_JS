@@ -1,22 +1,33 @@
 import React, { useContext, useEffect } from 'react';
 import Items from '../items/Items';
-import PropTypes from 'prop-types';
 import ItemForm from '../items/ItemForm';
 import ItemFilter from '../items/ItemFilter';
 import AuthContext from '../../context/auth/AuthContext';
+import OrderForm from '../orders/Order';
 
 const Home = props => {
   const authContext = useContext(AuthContext);
+  const { user } = authContext;
 
   useEffect(() => {
-    authContext.loadUser();
+    const waitforLoad = async () => {
+      await authContext.loadUser();
+    };
+    waitforLoad();
   }, []);
 
   return (
     <div className='grid-2'>
-      <div>
-        <ItemForm />
-      </div>
+      {user?.role === 'admin' && (
+        <div>
+          <ItemForm />
+        </div>
+      )}
+      {user?.role === 'client' && (
+        <div>
+          <OrderForm />
+        </div>
+      )}
       <div>
         <ItemFilter />
         <Items />

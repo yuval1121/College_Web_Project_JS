@@ -12,6 +12,10 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const ITEM_ERROR = 'ITEM_ERROR';
 
+//Orders
+export const ADD_TO_ORDER = 'ADD_TO_ORDER';
+export const DELETE_FROM_ORDER = 'DELETE_FROM_ORDER';
+export const MAKE_ORDER = 'MAKE_ORDER';
 //Auth
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';

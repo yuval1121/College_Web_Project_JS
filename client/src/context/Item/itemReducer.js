@@ -8,6 +8,9 @@ import {
   CLEAR_FILTER,
   ITEM_ERROR,
   GET_ITEMS,
+  ADD_TO_ORDER,
+  DELETE_FROM_ORDER,
+  MAKE_ORDER,
 } from '../types';
 
 const itemReducer = (state, action) => {
@@ -24,6 +27,15 @@ const itemReducer = (state, action) => {
         items: [action.payload, ...state.items],
         loading: false,
       };
+    case ADD_TO_ORDER: {
+      return {
+        ...state,
+        order: [action.payload, ...state.order],
+      };
+    }
+    case MAKE_ORDER: {
+      return { ...state, order: [] };
+    }
     case UPDATE_ITEM:
       return {
         ...state,
@@ -38,6 +50,12 @@ const itemReducer = (state, action) => {
         items: state.items.filter(item => item._id !== action.payload),
         loading: false,
       };
+    case DELETE_FROM_ORDER: {
+      return {
+        ...state,
+        order: state.order.filter(item => item._id !== action.payload),
+      };
+    }
     case SET_CURRENT:
       return { ...state, current: action.payload };
     case CLEAR_CURRENT:

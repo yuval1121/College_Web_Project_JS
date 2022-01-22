@@ -1,7 +1,6 @@
 import { useReducer } from 'react';
 import itemContext from './itemContext';
 import itemReducer from './itemReducer';
-import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import {
   ADD_ITEM,
@@ -13,6 +12,9 @@ import {
   CLEAR_FILTER,
   ITEM_ERROR,
   GET_ITEMS,
+  ADD_TO_ORDER,
+  DELETE_FROM_ORDER,
+  MAKE_ORDER,
 } from '../types';
 
 const ItemState = props => {
@@ -20,7 +22,7 @@ const ItemState = props => {
     items: null,
     current: null,
     filtered: null,
-    cart: null,
+    order: [],
     error: null,
   };
   const [state, dispatch] = useReducer(itemReducer, initState);
@@ -48,6 +50,24 @@ const ItemState = props => {
     }
   };
 
+  const addToOrder = item => {
+    dispatch({ type: ADD_TO_ORDER, payload: item });
+  };
+
+  const makeOrder = async order => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      await axios.post('/api/orders/makeorder', { items: order }, config);
+      dispatch({ type: MAKE_ORDER });
+    } catch (error) {
+      dispatch({ type: ITEM_ERROR, payload: error.response.msg });
+    }
+  };
+
   const deleteItem = async id => {
     try {
       await axios.delete(`/api/items/${id}`);
@@ -55,6 +75,10 @@ const ItemState = props => {
     } catch (error) {
       dispatch({ type: ITEM_ERROR, payload: error.response.msg });
     }
+  };
+
+  const deleteFromOrder = item => {
+    dispatch({ type: DELETE_FROM_ORDER, payload: item });
   };
 
   const setCurrent = item => {
@@ -91,7 +115,7 @@ const ItemState = props => {
     <itemContext.Provider
       value={{
         items: state.items,
-        cart: state.cart,
+        order: state.order,
         current: state.current,
         filtered: state.filtered,
         error: state.error,
@@ -103,6 +127,10 @@ const ItemState = props => {
         updateItem,
         filterItems,
         clearFilter,
+        //orders
+        addToOrder,
+        deleteFromOrder,
+        makeOrder,
       }}>
       {props.children}
     </itemContext.Provider>

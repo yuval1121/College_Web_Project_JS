@@ -50,7 +50,6 @@ ordersRouter.put(
       const orderID: string = req.params.orderID;
       const order = await orderModel.findByIdAndUpdate(orderID, { done: true });
       res.json(order);
-    
     } catch (error) {
       console.error(error);
       res.status(500).send('Server Error');
