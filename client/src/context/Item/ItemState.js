@@ -25,6 +25,7 @@ const ItemState = props => {
       { id: 2, name: 'Beer', price: 13, alcoholic: true, time: null },
     ],
     current: null,
+    filtered: null,
     cart: [],
   };
   const [state, dispatch] = useReducer(itemReducer, initState);
@@ -42,12 +43,20 @@ const ItemState = props => {
     dispatch({ type: SET_CURRENT, payload: item });
   };
 
-  const clearCurrent = item => {
+  const clearCurrent = () => {
     dispatch({ type: CLEAR_CURRENT });
   };
 
   const updateItem = item => {
     dispatch({ type: UPDATE_ITEM, payload: item });
+  };
+
+  const filterItems = text => {
+    dispatch({ type: FILTER_ITEMS, payload: text });
+  };
+
+  const clearFilter = () => {
+    dispatch({ type: CLEAR_FILTER });
   };
 
   return (
@@ -56,11 +65,14 @@ const ItemState = props => {
         items: state.items,
         cart: state.cart,
         current: state.current,
+        filtered: state.filtered,
         addItem,
         deleteItem,
         setCurrent,
         clearCurrent,
         updateItem,
+        filterItems,
+        clearFilter,
       }}>
       {props.children}
     </itemContext.Provider>

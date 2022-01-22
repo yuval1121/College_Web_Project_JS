@@ -31,6 +31,19 @@ const itemReducer = (state, action) => {
       return { ...state, current: action.payload };
     case CLEAR_CURRENT:
       return { ...state, current: null };
+    case FILTER_ITEMS:
+      return {
+        ...state,
+        filtered: state.items.filter(item => {
+          const regex = new RegExp(`${action.payload}`, 'gi');
+          return (
+            item.name.match(regex) || item.price.toString() === action.payload
+          );
+        }),
+      };
+    case CLEAR_FILTER: {
+      return { ...state, filtered: null };
+    }
     default:
       return state;
   }
