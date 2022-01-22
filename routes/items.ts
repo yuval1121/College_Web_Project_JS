@@ -59,8 +59,10 @@ itemsRouter.post('/', authUser, authAdmin, async (req, res) => {
 itemsRouter.put('/:id', authUser, authAdmin, async (req, res) => {
   try {
     const itemID = req.params.id;
-    const  newParams  = req.body;
-    const item = await itemModel.findByIdAndUpdate(itemID, newParams);
+    const newParams = req.body;
+    const item = await itemModel.findByIdAndUpdate(itemID, newParams, {
+      new: true,
+    });
     res.json(item);
   } catch (error) {
     console.error(error);

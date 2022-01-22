@@ -65,8 +65,18 @@ const ItemState = props => {
     dispatch({ type: CLEAR_CURRENT });
   };
 
-  const updateItem = item => {
-    dispatch({ type: UPDATE_ITEM, payload: item });
+  const updateItem = async item => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      const res = await axios.put(`/api/items/${item._id}`, item, config);
+      dispatch({ type: UPDATE_ITEM, payload: res.data });
+    } catch (error) {
+      dispatch({ type: ITEM_ERROR, payload: error.response.msg });
+    }
   };
 
   const filterItems = text => {
