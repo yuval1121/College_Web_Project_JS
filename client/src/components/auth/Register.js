@@ -22,7 +22,7 @@ const Register = props => {
       clearErrors();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, isAuthenticated, props.history]);
+  }, [error, isAuthenticated]);
 
   const [user, setUser] = useState({
     name: '',

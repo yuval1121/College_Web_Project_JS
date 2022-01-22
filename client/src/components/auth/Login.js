@@ -1,7 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import AuthContext from '../../context/auth/AuthContext';
+import AlertContext from '../../context/alert/AlertContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = props => {
+  const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
+  const redirect = useNavigate();
+
+  const { setAlert } = alertContext;
+
+  const { login, error, clearErrors, isAuthenticated } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      redirect('/');
+    }
+    if (error === 'Invalid Credentials') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, isAuthenticated]);
+
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -15,7 +37,11 @@ const Login = props => {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log('Login submit');
+    if (email === '' || password === '') {
+      setAlert('Please fill in all fields', 'danger');
+    } else {
+      login({ email, password });
+    }
   };
 
   return (
@@ -30,7 +56,9 @@ const Login = props => {
             type={'email'}
             name='email'
             value={email}
-            onChange={onChange}></input>
+            onChange={onChange}
+            required
+          />
         </div>
         <div className='form-group'>
           <label htmlFor='password'>Password</label>
@@ -38,7 +66,9 @@ const Login = props => {
             type='password'
             name='password'
             value={password}
-            onChange={onChange}></input>
+            onChange={onChange}
+            required
+          />
         </div>
 
         <input

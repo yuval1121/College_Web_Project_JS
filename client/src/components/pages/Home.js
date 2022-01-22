@@ -10,7 +10,7 @@ const Home = props => {
 
   useEffect(() => {
     authContext.loadUser();
-  });
+  }, []);
 
   return (
     <div className='grid-2'>
