@@ -5,10 +5,10 @@ import ItemContext from '../../context/Item/itemContext';
 const Item = ({ item }) => {
   const itemContext = useContext(ItemContext);
   const { deleteItem, setCurrent, clearCurrent } = itemContext;
-  const { id, name, price, alcoholic, time } = item;
+  const { _id, name, price, alcoholic, time } = item;
 
   const onDelete = () => {
-    deleteItem(id);
+    deleteItem(_id);
     clearCurrent();
   };
 
@@ -49,8 +49,8 @@ const Item = ({ item }) => {
 };
 
 Item.propTypes = {
-  item: PropTypes.exact({
-    id: PropTypes.number,
+  item: PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
     price: PropTypes.number,
     alcoholic: PropTypes.bool,

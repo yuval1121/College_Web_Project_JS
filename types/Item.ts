@@ -2,5 +2,5 @@ export default interface Item {
   name: string;
   price: number;
   alcoholic: boolean;
-  time: Date | null;
+  time: String | null;
 }

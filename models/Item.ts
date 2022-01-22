@@ -16,7 +16,7 @@ const itemSchema: Schema = new Schema<Item>({
     default: false,
   },
   time: {
-    type: Date,
+    type: String,
     default: null,
   },
 });

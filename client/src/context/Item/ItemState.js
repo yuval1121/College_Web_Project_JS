@@ -2,6 +2,7 @@ import { useReducer } from 'react';
 import itemContext from './itemContext';
 import itemReducer from './itemReducer';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 import {
   ADD_ITEM,
   DELETE_ITEM,
@@ -10,33 +11,50 @@ import {
   UPDATE_ITEM,
   FILTER_ITEMS,
   CLEAR_FILTER,
+  ITEM_ERROR,
+  GET_ITEMS,
 } from '../types';
 
 const ItemState = props => {
   const initState = {
-    items: [
-      {
-        id: 1,
-        name: 'Coke Can',
-        price: 13,
-        alcoholic: false,
-        time: '12PM',
-      },
-      { id: 2, name: 'Beer', price: 13, alcoholic: true, time: null },
-    ],
+    items: null,
     current: null,
     filtered: null,
-    cart: [],
+    cart: null,
+    error: null,
   };
   const [state, dispatch] = useReducer(itemReducer, initState);
 
-  const addItem = item => {
-    item.id = uuidv4();
-    dispatch({ type: ADD_ITEM, payload: item });
+  const getItems = async () => {
+    try {
+      const res = await axios.get('/api/items');
+      dispatch({ type: GET_ITEMS, payload: res.data });
+    } catch (error) {
+      dispatch({ type: ITEM_ERROR, payload: error.response.msg });
+    }
   };
 
-  const deleteItem = id => {
-    dispatch({ type: DELETE_ITEM, payload: id });
+  const addItem = async item => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      const res = await axios.post('/api/items', item, config);
+      dispatch({ type: ADD_ITEM, payload: res.data });
+    } catch (error) {
+      dispatch({ type: ITEM_ERROR, payload: error.response.msg });
+    }
+  };
+
+  const deleteItem = async id => {
+    try {
+      await axios.delete(`/api/items/${id}`);
+      dispatch({ type: DELETE_ITEM, payload: id });
+    } catch (error) {
+      dispatch({ type: ITEM_ERROR, payload: error.response.msg });
+    }
   };
 
   const setCurrent = item => {
@@ -66,6 +84,8 @@ const ItemState = props => {
         cart: state.cart,
         current: state.current,
         filtered: state.filtered,
+        error: state.error,
+        getItems,
         addItem,
         deleteItem,
         setCurrent,

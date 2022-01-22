@@ -30,11 +30,12 @@ const ItemForm = props => {
 
   const onChange = e => {
     setItem(prevItem => {
-      if (e.target.value === 'no') {
-        return { ...prevItem, [e.target.name]: false };
-      }
-      if (e.target.value === 'yes') {
-        return { ...prevItem, [e.target.name]: false };
+      if (e.target.name === 'alcoholic') {
+        return {
+          ...prevItem,
+          alcoholic: !prevItem.alcoholic,
+          [e.target.value]: 'false' ? false : true,
+        };
       }
       return { ...prevItem, [e.target.name]: e.target.value };
     });
