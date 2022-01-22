@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import ItemContext from '../../context/Item/itemContext';
-import AuthContext from '../../context/auth/AuthContext';
+//import AuthContext from '../../context/auth/AuthContext';
 
 const OrderItem = ({ item }) => {
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
+  //const authContext = useContext(AuthContext);
+  //const { user } = authContext;
   const itemContext = useContext(ItemContext);
-  const { deleteItem, setCurrent, clearCurrent, deleteFromOrder } = itemContext;
+  const { deleteFromOrder } = itemContext;
   const { _id, name, price, alcoholic, time } = item;
 
   const onDelete = () => {
