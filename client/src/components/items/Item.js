@@ -4,11 +4,12 @@ import ItemContext from '../../context/Item/itemContext';
 
 const Item = ({ item }) => {
   const itemContext = useContext(ItemContext);
-  const { deleteItem } = itemContext;
+  const { deleteItem, setCurrent, clearCurrent } = itemContext;
   const { id, name, price, alcoholic, time } = item;
 
   const onDelete = () => {
     deleteItem(id);
+    clearCurrent();
   };
 
   return (
@@ -19,8 +20,7 @@ const Item = ({ item }) => {
           style={{ float: 'right' }}
           className={
             'badge ' + (alcoholic === false ? 'badge-success' : 'badge-primary')
-          }
-        >
+          }>
           {alcoholic === false ? 'Non-Alcoholic' : 'Alcoholic'}
         </span>
       </h3>
@@ -38,7 +38,9 @@ const Item = ({ item }) => {
         )}
       </ul>
       <p className='btn btn-dark btn-sm'>Add</p>
-      <p className='btn btn-dark btn-sm'>Edit</p>
+      <p className='btn btn-dark btn-sm' onClick={() => setCurrent(item)}>
+        Edit
+      </p>
       <p className='btn btn-danger btn-sm' onClick={onDelete}>
         Delete
       </p>
