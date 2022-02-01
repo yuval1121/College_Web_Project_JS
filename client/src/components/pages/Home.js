@@ -14,6 +14,7 @@ const Home = props => {
       await authContext.loadUser();
     };
     waitforLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -23,7 +24,7 @@ const Home = props => {
           <ItemForm />
         </div>
       )}
-      {user?.role === 'client' && (
+      {user?.role.includes('client') && (
         <div>
           <OrderForm />
         </div>

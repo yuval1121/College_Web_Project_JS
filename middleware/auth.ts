@@ -5,7 +5,7 @@ import UserModel from '../models/User';
 
 export function authUser(req: Request, res: Response, next: NextFunction) {
   //get token from header
-  const token = req.header('x-auth-token');
+  const token = req.header('Authorization');
 
   //check if token exists
   if (!token) {

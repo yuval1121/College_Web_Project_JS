@@ -40,7 +40,7 @@ const Item = ({ item }) => {
           </li>
         )}
       </ul>
-      {user?.role === 'client' && (
+      {user?.role.includes('client') && (
         <p className='btn btn-dark btn-sm' onClick={() => addToOrder(item)}>
           Add
         </p>

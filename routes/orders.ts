@@ -48,7 +48,11 @@ ordersRouter.put(
   async (req: Request, res: Response) => {
     try {
       const orderID: string = req.params.orderID;
-      const order = await orderModel.findByIdAndUpdate(orderID, { done: true });
+      const order = await orderModel.findByIdAndUpdate(
+        orderID,
+        { done: true },
+        { new: true }
+      );
       res.json(order);
     } catch (error) {
       console.error(error);
